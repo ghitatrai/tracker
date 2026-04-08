@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Bill Tracker - Financial Management</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#93ccff",
+                        "on-primary-fixed": "#00201d",
+                        "on-tertiary-container": "#fffbff",
+                        "surface-variant": "#dee4e1",
+                        "tertiary-container": "#b05e3d",
+                        "inverse-on-surface": "#edf2f0",
+                        "on-primary-container": "#f4fffc",
+                        "tertiary": "#924628",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed": "#001d31",
+                        "on-secondary-fixed-variant": "#004b73",
+                        "on-background": "#171d1c",
+                        "surface-container-high": "#e4e9e7",
+                        "surface-tint": "#006a61",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#dee4e1",
+                        "background": "#f5faf8",
+                        "surface-container-low": "#f0f5f2",
+                        "surface-dim": "#d6dbd9",
+                        "surface-container": "#eaefed",
+                        "secondary-container": "#5bb8fe",
+                        "on-secondary-container": "#00476e",
+                        "outline-variant": "#bcc9c6",
+                        "on-surface-variant": "#3d4947",
+                        "error-container": "#ffdad6",
+                        "surface": "#f5faf8",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#6d7a77",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f5faf8",
+                        "tertiary-fixed": "#ffdbce",
+                        "on-surface": "#171d1c",
+                        "inverse-primary": "#6bd8cb",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#d7efff",
+                        "primary": "#006a61",
+                        "on-error-container": "#410e0b",
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="bg-background font-sans text-on-surface">
+
+<!-- Header -->
+<div class="bg-white shadow-sm sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <span class="text-2xl">💰</span>
+            <h1 class="text-xl md:text-2xl font-bold text-primary">Tracker</h1>
+        </div>
+        <div class="flex items-center gap-2">
+            <button class="p-2 hover:bg-surface-container rounded-full transition-colors hidden md:flex">
+                <span class="material-symbols-outlined text-on-surface">notifications</span>
+            </button>
+            <button class="p-2 hover:bg-surface-container rounded-full transition-colors hidden md:flex">
+                <span class="material-symbols-outlined text-on-surface">settings</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<main class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16 pb-24 md:pb-12">
+    <!-- Hero Section -->
+    <section class="text-center mb-16">
+        <div class="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full mb-6">
+            <span class="material-symbols-outlined text-primary text-sm">check_circle</span>
+            <span class="text-xs font-medium text-primary uppercase tracking-widest">Smart Financial Management</span>
+        </div>
+        <h2 class="text-4xl md:text-5xl font-bold mb-6">
+            Take Control of Your <span class="text-primary">Finances</span>
+        </h2>
+        <p class="text-lg text-on-surface-variant max-w-2xl mx-auto mb-8 leading-relaxed">
+            Track expenses, monitor spending patterns, and stay organized with our intuitive bill management system. Built for modern financial awareness.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+            <a href="/dashboard" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary hover:bg-primary-dark text-white rounded-lg font-semibold transition-colors">
+                <span class="material-symbols-outlined">dashboard</span>
+                Get Started
+            </a>
+            <a href="/analytics" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-surface-container-high hover:bg-surface-container text-on-surface rounded-lg font-semibold transition-colors border border-outline-variant">
+                <span class="material-symbols-outlined">insights</span>
+                View Analytics
+            </a>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        <div class="bg-white p-8 rounded-2xl border border-surface-container-high hover:shadow-lg transition-all">
+            <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+                <span class="material-symbols-outlined text-primary">dashboard</span>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Dashboard Overview</h3>
+            <p class="text-on-surface-variant text-sm leading-relaxed">
+                Get a comprehensive view of your financial status with real-time statistics, upcoming bill alerts, and spending summaries.
+            </p>
+        </div>
+
+        <div class="bg-white p-8 rounded-2xl border border-surface-container-high hover:shadow-lg transition-all">
+            <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+                <span class="material-symbols-outlined text-primary">receipt_long</span>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Bill Management</h3>
+            <p class="text-on-surface-variant text-sm leading-relaxed">
+                Easily create, edit, and organize your bills with our user-friendly interface, powerful search tools, and smart categorization.
+            </p>
+        </div>
+
+        <div class="bg-white p-8 rounded-2xl border border-surface-container-high hover:shadow-lg transition-all">
+            <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+                <span class="material-symbols-outlined text-primary">insights</span>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Analytics & Insights</h3>
+            <p class="text-on-surface-variant text-sm leading-relaxed">
+                Visualize your spending patterns with interactive charts and gain valuable insights into your financial habits and trends.
+            </p>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="bg-white rounded-2xl border border-surface-container-high p-8 md:p-12 mb-16">
+        <div class="text-center mb-8">
+            <h3 class="text-3xl font-bold mb-2">Your Financial Snapshot</h3>
+            <p class="text-on-surface-variant">See what you can achieve with Bill Tracker</p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="text-center">
+                <div class="text-3xl font-bold text-primary mb-2">$2,450</div>
+                <p class="text-xs text-on-surface-variant uppercase tracking-widest font-medium">Monthly Spending</p>
+            </div>
+            <div class="text-center">
+                <div class="text-3xl font-bold text-primary mb-2">14</div>
+                <p class="text-xs text-on-surface-variant uppercase tracking-widest font-medium">Active Bills</p>
+            </div>
+            <div class="text-center">
+                <div class="text-3xl font-bold text-primary mb-2">4</div>
+                <p class="text-xs text-on-surface-variant uppercase tracking-widest font-medium">Categories</p>
+            </div>
+            <div class="text-center">
+                <div class="text-3xl font-bold text-primary mb-2">$1,120</div>
+                <p class="text-xs text-on-surface-variant uppercase tracking-widest font-medium">Next 7 Days</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="bg-primary text-white rounded-2xl p-8 md:p-12 text-center mb-8">
+        <h3 class="text-3xl font-bold mb-4">Ready to Take Control?</h3>
+        <p class="text-lg mb-6 text-white/90">Join thousands of users who have transformed their financial management.</p>
+        <a href="/bill-form" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-primary rounded-lg font-semibold hover:bg-white/90 transition-colors">
+            <span class="material-symbols-outlined">add</span>
+            Create Your First Bill
+        </a>
+    </section>
+</main>
+
+<!-- Mobile Navigation -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-lg border-t-0 flex justify-around items-center py-3 px-2 z-50 shadow-[0_-8px_30px_rgb(0,0,0,0.04)]" aria-label="Mobile navigation">
+    <a href="/dashboard" class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span class="text-[10px] font-medium">DASH</span>
+    </a>
+    <a href="/bills-page" class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors">
+        <span class="material-symbols-outlined">receipt_long</span>
+        <span class="text-[10px] font-medium">BILLS</span>
+    </a>
+    <a href="/bill-form" class="flex flex-col items-center gap-1 text-primary">
+        <span class="material-symbols-outlined">add</span>
+        <span class="text-[10px] font-medium">ADD</span>
+    </a>
+    <a href="/analytics" class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors">
+        <span class="material-symbols-outlined">insights</span>
+        <span class="text-[10px] font-medium">STATS</span>
+    </a>
+    <a href="/settings" class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors">
+        <span class="material-symbols-outlined">settings</span>
+        <span class="text-[10px] font-medium">SET</span>
+    </a>
+</nav>
+
+</body>
+</html>

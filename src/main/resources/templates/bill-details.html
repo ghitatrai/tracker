@@ -1,4 +1,127 @@
-<h2>Bill Details</h2>
-<p>Title: Rent</p>
-<p>Amount: 500</p>
-<p>Status: UNPAID</p>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Bill Details - Bill Tracker</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#93ccff",
+                        "on-primary-fixed": "#00201d",
+                        "on-tertiary-container": "#fffbff",
+                        "surface-variant": "#dee4e1",
+                        "tertiary-container": "#b05e3d",
+                        "inverse-on-surface": "#edf2f0",
+                        "on-primary-container": "#f4fffc",
+                        "tertiary": "#924628",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed": "#001d31",
+                        "on-secondary-fixed-variant": "#004b73",
+                        "on-background": "#171d1c",
+                        "surface-container-high": "#e4e9e7",
+                        "surface-tint": "#006a61",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#dee4e1",
+                        "background": "#f5faf8",
+                        "surface-container-low": "#f0f5f2",
+                        "surface-dim": "#d6dbd9",
+                        "surface-container": "#eaefed",
+                        "secondary-container": "#5bb8fe",
+                        "on-secondary-container": "#00476e",
+                        "outline-variant": "#bcc9c6",
+                        "on-surface-variant": "#3d4947",
+                        "error-container": "#ffdad6",
+                        "surface": "#f5faf8",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#6d7a77",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f5faf8",
+                        "tertiary-fixed": "#ffdbce",
+                        "on-surface": "#171d1c",
+                        "inverse-primary": "#6bd8cb",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#d7efff",
+                        "primary": "#006a61",
+                        "on-error-container": "#410e0b",
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="bg-background font-sans text-on-surface">
+
+<!-- Header -->
+<div class="bg-white shadow-sm sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <span class="text-2xl">💰</span>
+            <h1 class="text-xl md:text-2xl font-bold text-primary">Tracker</h1>
+        </div>
+        <div class="flex items-center gap-2">
+            <button class="p-2 hover:bg-surface-container rounded-full transition-colors">
+                <span class="material-symbols-outlined text-on-surface">notifications</span>
+            </button>
+            <button class="p-2 hover:bg-surface-container rounded-full transition-colors">
+                <span class="material-symbols-outlined text-on-surface">settings</span>
+            </button>
+            <img alt="User profile" class="w-10 h-10 rounded-full object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&amp;h=400&amp;fit=crop"/>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<main class="max-w-4xl mx-auto px-4 md:px-6 py-8 md:py-12 pb-24 md:pb-12">
+    <!-- Back Link -->
+    <div class="mb-6">
+        <a href="/bills-page" class="flex items-center gap-2 text-primary hover:text-primary-dark transition-colors">
+            <span class="material-symbols-outlined">arrow_back</span>
+            <span class="text-sm font-medium">Back to Bills</span>
+        </a>
+    </div>
+
+    <!-- Bill Details Card -->
+    <div class="bg-white rounded-2xl shadow-md overflow-hidden" id="billDetails">
+        <div class="p-6 md:p-8 border-b border-surface-container">
+            <p class="text-center text-on-surface-variant py-12">Loading bill details...</p>
+        </div>
+    </div>
+</main>
+
+<!-- Mobile Navigation -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-lg border-t-0 flex justify-around items-center py-3 px-2 z-50 shadow-[0_-8px_30px_rgb(0,0,0,0.04)]" aria-label="Mobile navigation">
+    <a href="/dashboard" class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span class="text-[10px] font-medium">DASH</span>
+    </a>
+    <a href="/bills-page" class="flex flex-col items-center gap-1 text-primary">
+        <span class="material-symbols-outlined">receipt_long</span>
+        <span class="text-[10px] font-medium">BILLS</span>
+    </a>
+    <a href="/bill-form" class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors">
+        <span class="material-symbols-outlined">add</span>
+        <span class="text-[10px] font-medium">ADD</span>
+    </a>
+    <a href="/analytics" class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors">
+        <span class="material-symbols-outlined">insights</span>
+        <span class="text-[10px] font-medium">STATS</span>
+    </a>
+    <a href="/settings" class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors">
+        <span class="material-symbols-outlined">settings</span>
+        <span class="text-[10px] font-medium">SET</span>
+    </a>
+</nav>
+
+<script src="/js/api.js"></script>
+<script src="/js/bill-details.js"></script>
+
+</body>
+</html>

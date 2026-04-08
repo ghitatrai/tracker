@@ -1,5 +1,376 @@
-<h2>Categories</h2>
-<ul>
-    <li>Rent</li>
-    <li>Food</li>
-</ul>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Categories - Tracker Financial Architect</title>
+    <!-- Fonts: Manrope for Headlines, Inter for UI -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+    <!-- Material Symbols Outlined -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#5bb8fe",
+                        "primary-fixed-dim": "#6bd8cb",
+                        "on-primary-container": "#f4fffc",
+                        "inverse-surface": "#2c3130",
+                        "on-secondary-fixed": "#001d31",
+                        "on-secondary-container": "#00476e",
+                        "on-secondary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed-dim": "#93ccff",
+                        "on-primary-fixed": "#00201d",
+                        "surface-variant": "#dee4e1",
+                        "surface-bright": "#f5faf8",
+                        "surface": "#f5faf8",
+                        "on-tertiary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#89f5e7",
+                        "inverse-primary": "#6bd8cb",
+                        "background": "#f5faf8",
+                        "tertiary-container": "#b05e3d",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed": "#cce5ff",
+                        "outline-variant": "#bcc9c6",
+                        "inverse-on-surface": "#edf2f0",
+                        "on-surface": "#171d1c",
+                        "surface-container-low": "#f0f5f2",
+                        "on-surface-variant": "#3d4947",
+                        "surface-container-high": "#e4e9e7",
+                        "on-secondary-fixed-variant": "#004b73",
+                        "outline": "#6d7a77",
+                        "primary": "#00685f",
+                        "on-primary-fixed-variant": "#005049",
+                        "surface-dim": "#d6dbd9",
+                        "surface-container": "#eaefed",
+                        "surface-tint": "#006a61",
+                        "error": "#ba1a1a",
+                        "tertiary": "#924628",
+                        "on-error": "#ffffff",
+                        "on-background": "#171d1c",
+                        "secondary": "#006398",
+                        "surface-container-highest": "#dee4e1",
+                        "on-tertiary-fixed-variant": "#773215",
+                        "on-tertiary-container": "#fffbff",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "primary-container": "#008378",
+                        "tertiary-fixed": "#ffdbce",
+                        "on-tertiary-fixed": "#370e00",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .editorial-spacing {
+            letter-spacing: -0.02em;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #eaefed;
+        }
+        h1, h2, h3 .headline {
+            font-family: 'Manrope', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-surface-container text-on-surface">
+<!-- TopNavBar -->
+<header class="bg-white/80 backdrop-blur-md text-teal-700 sticky top-0 z-40 flex justify-between items-center px-8 h-16 w-full">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-bold tracking-tight text-teal-800">Tracker</span>
+<div class="hidden md:flex items-center gap-6">
+<nav class="flex gap-6 items-center">
+<a class="text-slate-500 hover:bg-teal-50 transition-colors px-3 py-2 rounded-lg text-sm font-medium" th:href="@{/dashboard}">Dashboard</a>
+<a class="text-slate-500 hover:bg-teal-50 transition-colors px-3 py-2 rounded-lg text-sm font-medium" th:href="@{/bills-page}">Bills</a>
+<a class="text-teal-700 font-semibold hover:bg-teal-50 transition-colors px-3 py-2 rounded-lg text-sm font-medium" th:href="@{/categories}">Categories</a>
+</nav>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-teal-50 rounded-full transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant/15">
+<img alt="User profile" data-alt="portrait of a professional woman with a soft smile in a bright office environment, natural daylight, minimalist aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYHaoRddyaXWex77bU4xfjPdj_Zfe_CBbiS2_4VYHaLPwdj3FfzFUJQC6n75gvStMAFfMdmU3HxykmaivIslTIhfS3hnfnbmfedA0FIPedI9Srjx_IkD74k5ErANC2_BSww-W1Anntetb_IVkcR5Hxu4JWi4HhEIDHBsn-GXXWLXFnDK7JJ32QAj2v_5z2Eh87Os2AoVk8eakWifgX5V2FPrHwHDjRdts8blspKhEz_2VYAjlCHsUvqe1EiD31Iov2JiAF9RbbpV8"/>
+</div>
+</div>
+</header>
+<div class="flex">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col py-6 px-4 bg-slate-50 w-64 hidden md:flex">
+<div class="mb-10 px-4">
+<h2 class="text-xl font-black text-teal-900">Tracker</h2>
+<p class="text-xs text-slate-500 font-medium uppercase tracking-widest">Financial Architect</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-teal-50 transition-all rounded-lg group active:scale-95 duration-150" th:href="@{/dashboard}">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-teal-50 transition-all rounded-lg group active:scale-95 duration-150" th:href="@{/bills-page}">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-medium">Bills</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-teal-50 transition-all rounded-lg group active:scale-95 duration-150" th:href="@{/bill-form}">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="font-medium">Add Bill</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-teal-50 transition-all rounded-lg group active:scale-95 duration-150" th:href="@{/analytics}">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-medium">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-teal-800 font-bold border-r-4 border-teal-600 bg-teal-50/50 active:scale-95 duration-150" th:href="@{/categories}">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">category</span>
+<span class="font-medium">Categories</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-teal-50 transition-all rounded-lg group active:scale-95 duration-150" th:href="@{/settings}">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-medium">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-4 space-y-4">
+<div class="p-4 bg-teal-900 rounded-xl text-white">
+<p class="text-sm font-bold mb-2">Upgrade to Pro</p>
+<p class="text-xs text-teal-200 mb-3 leading-relaxed">Get advanced insights and unlimited categories.</p>
+<button class="w-full py-2 bg-teal-500 hover:bg-teal-400 text-teal-950 text-xs font-bold rounded-lg transition-colors">Learn More</button>
+</div>
+<div class="space-y-1">
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:text-teal-800 text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-lg">help</span>
+                        Help Center
+                    </a>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:text-error text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-lg">logout</span>
+                        Sign Out
+                    </a>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 md:ml-64 p-8 min-h-screen">
+<div class="max-w-6xl mx-auto">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+<div>
+<h1 class="text-4xl font-extrabold text-on-surface editorial-spacing mb-2">Expense Categories</h1>
+<p class="text-on-surface-variant max-w-md">Organize your spending with surgical precision. Layer your financial data for better clarity.</p>
+</div>
+<button class="flex items-center justify-center gap-2 bg-primary text-on-primary px-6 py-3 rounded-xl font-bold hover:bg-primary-container transition-all active:scale-95 shadow-lg shadow-primary/10">
+<span class="material-symbols-outlined">add</span>
+                        Add Category
+                    </button>
+</header>
+<!-- Stats / Quick Look Asymmetric Bento -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-12">
+<div class="md:col-span-8 bg-surface-container-lowest p-8 rounded-xl shadow-sm">
+<div class="flex justify-between items-start mb-8">
+<h3 class="text-lg font-bold editorial-spacing text-on-surface-variant">Top Spending Tiers</h3>
+<span class="text-xs font-bold text-primary uppercase tracking-widest bg-primary/5 px-2 py-1 rounded">Last 30 Days</span>
+</div>
+<div class="flex items-end gap-12">
+<div>
+<span class="text-slate-400 text-xs font-bold uppercase tracking-widest block mb-1">Housing</span>
+<span class="text-3xl font-extrabold text-on-surface">$2,450.00</span>
+</div>
+<div class="flex-1 h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[65%]"></div>
+</div>
+</div>
+</div>
+<div class="md:col-span-4 bg-tertiary-container p-8 rounded-xl text-on-tertiary-container flex flex-col justify-between">
+<div>
+<span class="material-symbols-outlined text-4xl mb-4">account_balance_wallet</span>
+<h3 class="text-xl font-bold">Uncategorized</h3>
+</div>
+<div>
+<p class="text-3xl font-black mb-1">$124.50</p>
+<p class="text-sm opacity-80">4 transactions need review</p>
+</div>
+</div>
+</section>
+<!-- Category Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Category Card: Housing -->
+<div class="group bg-surface-container-lowest p-6 rounded-xl transition-all hover:bg-white hover:translate-y-[-4px]">
+<div class="flex justify-between items-start mb-6">
+<div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">home</span>
+</div>
+<div class="flex gap-1 transition-opacity opacity-100">
+<button class="p-2 hover:bg-surface-container rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-2 hover:bg-error-container hover:text-error rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</div>
+<h4 class="text-lg font-bold text-on-surface mb-1">Housing</h4>
+<p class="text-sm text-on-surface-variant mb-6">Rent, Mortgage, Repairs</p>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/15">
+<span class="text-xs font-bold text-slate-400 uppercase tracking-widest">3 Bills</span>
+<span class="text-lg font-bold text-on-surface">$2,450.00</span>
+</div>
+</div>
+<!-- Category Card: Utilities -->
+<div class="group bg-surface-container-lowest p-6 rounded-xl transition-all hover:bg-white hover:translate-y-[-4px]">
+<div class="flex justify-between items-start mb-6">
+<div class="w-12 h-12 rounded-xl bg-secondary-container/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<div class="flex gap-1 transition-opacity opacity-100">
+<button class="p-2 hover:bg-surface-container rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-2 hover:bg-error-container hover:text-error rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</div>
+<h4 class="text-lg font-bold text-on-surface mb-1">Utilities</h4>
+<p class="text-sm text-on-surface-variant mb-6">Water, Gas, Electricity</p>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/15">
+<span class="text-xs font-bold text-slate-400 uppercase tracking-widest">5 Bills</span>
+<span class="text-lg font-bold text-on-surface">$385.20</span>
+</div>
+</div>
+<!-- Category Card: Subscriptions -->
+<div class="group bg-surface-container-lowest p-6 rounded-xl transition-all hover:bg-white hover:translate-y-[-4px]">
+<div class="flex justify-between items-start mb-6">
+<div class="w-12 h-12 rounded-xl bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed-variant">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">subscriptions</span>
+</div>
+<div class="flex gap-1 transition-opacity opacity-100">
+<button class="p-2 hover:bg-surface-container rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-2 hover:bg-error-container hover:text-error rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</div>
+<h4 class="text-lg font-bold text-on-surface mb-1">Subscriptions</h4>
+<p class="text-sm text-on-surface-variant mb-6">Netflix, Gym, iCloud</p>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/15">
+<span class="text-xs font-bold text-slate-400 uppercase tracking-widest">12 Bills</span>
+<span class="text-lg font-bold text-on-surface">$112.99</span>
+</div>
+</div>
+<!-- Category Card: Groceries -->
+<div class="group bg-surface-container-lowest p-6 rounded-xl transition-all hover:bg-white hover:translate-y-[-4px]">
+<div class="flex justify-between items-start mb-6">
+<div class="w-12 h-12 rounded-xl bg-primary-fixed flex items-center justify-center text-on-primary-fixed-variant">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">shopping_cart</span>
+</div>
+<div class="flex gap-1 transition-opacity opacity-100">
+<button class="p-2 hover:bg-surface-container rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-2 hover:bg-error-container hover:text-error rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</div>
+<h4 class="text-lg font-bold text-on-surface mb-1">Groceries</h4>
+<p class="text-sm text-on-surface-variant mb-6">Weekly food, household</p>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/15">
+<span class="text-xs font-bold text-slate-400 uppercase tracking-widest">0 Bills</span>
+<span class="text-lg font-bold text-on-surface">$0.00</span>
+</div>
+</div>
+<!-- Category Card: Transport -->
+<div class="group bg-surface-container-lowest p-6 rounded-xl transition-all hover:bg-white hover:translate-y-[-4px]">
+<div class="flex justify-between items-start mb-6">
+<div class="w-12 h-12 rounded-xl bg-slate-200 flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+</div>
+<div class="flex gap-1 transition-opacity opacity-100">
+<button class="p-2 hover:bg-surface-container rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-2 hover:bg-error-container hover:text-error rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</div>
+<h4 class="text-lg font-bold text-on-surface mb-1">Transport</h4>
+<p class="text-sm text-on-surface-variant mb-6">Gas, Insurance, Transit</p>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/15">
+<span class="text-xs font-bold text-slate-400 uppercase tracking-widest">2 Bills</span>
+<span class="text-lg font-bold text-on-surface">$210.00</span>
+</div>
+</div>
+<!-- Empty Placeholder / Add New State -->
+<div class="border-2 border-dashed border-outline-variant/30 p-6 rounded-xl flex flex-col items-center justify-center text-center group cursor-pointer hover:border-primary/50 transition-colors" onclick="console.log('Add New Category clicked')">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant group-hover:bg-primary group-hover:text-on-primary transition-all mb-4">
+<span class="material-symbols-outlined text-2xl">add</span>
+</div>
+<p class="font-bold text-on-surface-variant group-hover:text-primary transition-colors">New Category</p>
+<p class="text-xs text-slate-400 mt-1">Define custom spending rules</p>
+</div>
+</div>
+<!-- Footer Contextual Help -->
+<footer class="mt-20 pt-8 border-t border-outline-variant/15 flex flex-col md:flex-row gap-8 justify-between items-center">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">lightbulb</span>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">Did you know?</p>
+<p class="text-xs text-on-surface-variant">You can set monthly budgets per category in the <a class="text-primary underline" href="#">Settings</a> menu.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-primary transition-colors">Export Report</button>
+<button class="text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-primary transition-colors">Bulk Actions</button>
+</div>
+</footer>
+</div>
+</main>
+</div>
+<!-- Mobile Bottom Navigation Shell -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white/90 backdrop-blur-lg border-t-0 shadow-[0_-8px_30px_rgb(0,0,0,0.04)] flex justify-around items-center h-16 px-4 z-50">
+<a class="flex flex-col items-center gap-1 text-slate-500" th:href="@{/dashboard}">
+<span class="material-symbols-outlined text-xl">dashboard</span>
+<span class="text-[10px] font-bold">Dash</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500" th:href="@{/bills-page}">
+<span class="material-symbols-outlined text-xl">receipt_long</span>
+<span class="text-[10px] font-bold">Bills</span>
+</a>
+<div class="translate-y-[-24px] bg-primary text-on-primary p-3 rounded-full shadow-lg shadow-primary/30">
+<span class="material-symbols-outlined text-2xl">add</span>
+</div>
+<a class="flex flex-col items-center gap-1 text-teal-700" th:href="@{/categories}">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">category</span>
+<span class="text-[10px] font-bold">Tags</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500" th:href="@{/settings}">
+<span class="material-symbols-outlined text-xl">settings</span>
+<span class="text-[10px] font-bold">Set</span>
+</a>
+</nav>
+</body>
+</html>

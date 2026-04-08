@@ -1,0 +1,183 @@
+.details-wrapper {
+    max-width: 850px;
+    margin: 45px auto;
+}
+
+.details-card {
+    background: linear-gradient(135deg, #fefae0 0%, #dda15e 30%);
+    padding: 45px;
+    border-radius: 16px;
+    box-shadow: 0 12px 35px rgba(40, 54, 24, 0.15);
+    border: 2px solid #bc6c25;
+}
+
+.details-card h2 {
+    margin-bottom: 35px;
+    color: #283618;
+    font-size: 2.2em;
+    text-shadow: 0 2px 4px rgba(40, 54, 24, 0.1);
+    border-bottom: 3px solid #dda15e;
+    padding-bottom: 12px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 22px 0;
+    border-bottom: 2px solid rgba(188, 108, 37, 0.2);
+    flex-wrap: wrap;
+    transition: all 0.3s ease;
+}
+
+.detail-row:hover {
+    background: rgba(96, 108, 56, 0.05);
+    border-radius: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+    margin: 0 -12px;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: #606c38;
+    flex: 0 0 40%;
+    font-size: 1.1em;
+}
+
+.detail-value {
+    color: #283618;
+    flex: 0 0 60%;
+    text-align: right;
+    word-break: break-word;
+    font-size: 1.05em;
+    font-weight: 500;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 6px rgba(40, 54, 24, 0.1);
+}
+
+.status-badge.paid {
+    background: linear-gradient(135deg, #606c38 0%, #283618 100%);
+    color: #fefae0;
+    border: 1px solid #bc6c25;
+}
+
+.status-badge.unpaid {
+    background: linear-gradient(135deg, #bc6c25 0%, #dda15e 100%);
+    color: #fefae0;
+    border: 1px solid #606c38;
+}
+
+.amount-display {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: #283618;
+    text-shadow: 0 2px 4px rgba(40, 54, 24, 0.1);
+}
+
+.details-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 35px;
+    justify-content: center;
+}
+
+.btn-edit,
+.btn-delete {
+    padding: 16px 32px;
+    border: 2px solid;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(40, 54, 24, 0.15);
+}
+
+.btn-edit {
+    background: linear-gradient(135deg, #606c38 0%, #283618 100%);
+    color: #fefae0;
+    border-color: #bc6c25;
+}
+
+.btn-edit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(96, 108, 56, 0.3);
+    background: linear-gradient(135deg, #283618 0%, #606c38 100%);
+}
+
+.btn-delete {
+    background: linear-gradient(135deg, #bc6c25 0%, #dda15e 100%);
+    color: #fefae0;
+    border-color: #606c38;
+}
+
+.btn-delete:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(188, 108, 37, 0.3);
+    background: linear-gradient(135deg, #dda15e 0%, #bc6c25 100%);
+}
+    transition: all 0.3s ease;
+}
+
+.btn-edit {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    flex: 1;
+}
+
+.btn-edit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-delete {
+    background: #fed7d7;
+    color: #742a2a;
+    flex: 1;
+}
+
+.btn-delete:hover {
+    background: #fc8181;
+    color: white;
+}
+
+.loading {
+    text-align: center;
+    color: #718096;
+    padding: 40px;
+}
+
+@media (max-width: 600px) {
+    .details-card {
+        padding: 24px;
+    }
+    
+    .detail-row {
+        flex-direction: column;
+    }
+    
+    .detail-label,
+    .detail-value {
+        flex: 0 0 100%;
+        text-align: left;
+    }
+    
+    .details-actions {
+        flex-direction: column;
+    }
+}

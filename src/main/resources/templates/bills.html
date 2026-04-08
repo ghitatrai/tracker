@@ -1,26 +1,320 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="../static/css/bills.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>All Bills - The Financial Architect</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#93ccff",
+                        "on-primary-fixed": "#00201d",
+                        "on-tertiary-container": "#fffbff",
+                        "surface-variant": "#dee4e1",
+                        "tertiary-container": "#b05e3d",
+                        "inverse-on-surface": "#edf2f0",
+                        "on-primary-container": "#f4fffc",
+                        "tertiary": "#924628",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed": "#001d31",
+                        "on-secondary-fixed-variant": "#004b73",
+                        "on-background": "#171d1c",
+                        "surface-container-high": "#e4e9e7",
+                        "surface-tint": "#006a61",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#dee4e1",
+                        "background": "#f5faf8",
+                        "surface-container-low": "#f0f5f2",
+                        "surface-dim": "#d6dbd9",
+                        "surface-container": "#eaefed",
+                        "secondary-container": "#5bb8fe",
+                        "on-secondary-container": "#00476e",
+                        "outline-variant": "#bcc9c6",
+                        "on-surface-variant": "#3d4947",
+                        "error-container": "#ffdad6",
+                        "surface": "#f5faf8",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#6d7a77",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f5faf8",
+                        "tertiary-fixed": "#ffdbce",
+                        "on-surface": "#171d1c",
+                        "inverse-primary": "#6bd8cb",
+                        "on-tertiary-fixed-variant": "#773215",
+                        "inverse-surface": "#2c3130",
+                        "on-tertiary-fixed": "#370e00",
+                        "primary-container": "#008378",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#89f5e7",
+                        "secondary": "#006398",
+                        "primary": "#00685f",
+                        "on-primary-fixed-variant": "#005049",
+                        "secondary-fixed": "#cce5ff",
+                        "primary-fixed-dim": "#6bd8cb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f5faf8; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .font-headline { font-family: 'Manrope', sans-serif; }
+        .tonal-shift { background-color: #f5faf8; }
+        .scale-98:active { transform: scale(0.98); }
+    </style>
 </head>
-<body>
-
-<h2>All Bills</h2>
-
-<table>
-    <thead>
-    <tr>
-        <th>Title</th>
-        <th>Amount</th>
-        <th>Due</th>
-        <th>Status</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody id="billsTable"></tbody>
+<body class="bg-surface text-on-surface">
+<div class="flex min-h-screen">
+<!-- Sidebar Navigation -->
+<aside class="hidden md:flex flex-col h-screen w-64 sticky top-0 py-6 px-4 bg-emerald-50 dark:bg-slate-900 border-r-0 z-40">
+<div class="mb-10 px-2">
+<h1 class="text-2xl font-bold tracking-tight text-teal-900 dark:text-teal-50 font-headline">Tracker</h1>
+<p class="text-xs uppercase tracking-[0.05em] font-label text-slate-500 mt-1">Premium Financial Architect</p>
+</div>
+<nav class="flex-1 space-y-1" aria-label="Main navigation">
+<a class="flex items-center px-4 py-3 rounded-lg text-slate-500 hover:text-teal-600 hover:bg-emerald-100 dark:hover:bg-slate-800 transition-colors duration-200 group" th:href="@{/dashboard}">
+<span class="material-symbols-outlined mr-3" data-icon="dashboard">dashboard</span>
+<span class="font-label uppercase tracking-wider text-xs">Dashboard</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-lg text-teal-700 dark:text-teal-400 font-bold border-r-4 border-teal-700 dark:border-teal-400 bg-teal-50/50 dark:bg-teal-900/20 group" th:href="@{/bills-page}">
+<span class="material-symbols-outlined mr-3" data-icon="receipt_long">receipt_long</span>
+<span class="font-label uppercase tracking-wider text-xs">Bills</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-lg text-slate-500 hover:text-teal-600 hover:bg-emerald-100 dark:hover:bg-slate-800 transition-colors duration-200 group" th:href="@{/bill-form}">
+<span class="material-symbols-outlined mr-3" data-icon="add_circle">add_circle</span>
+<span class="font-label uppercase tracking-wider text-xs">Add Bill</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-lg text-slate-500 hover:text-teal-600 hover:bg-emerald-100 dark:hover:bg-slate-800 transition-colors duration-200 group" th:href="@{/analytics}">
+<span class="material-symbols-outlined mr-3" data-icon="insights">insights</span>
+<span class="font-label uppercase tracking-wider text-xs">Analytics</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-lg text-slate-500 hover:text-teal-600 hover:bg-emerald-100 dark:hover:bg-slate-800 transition-colors duration-200 group" th:href="@{/categories}">
+<span class="material-symbols-outlined mr-3" data-icon="category">category</span>
+<span class="font-label uppercase tracking-wider text-xs">Categories</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-lg text-slate-500 hover:text-teal-600 hover:bg-emerald-100 dark:hover:bg-slate-800 transition-colors duration-200 group" th:href="@{/settings}">
+<span class="material-symbols-outlined mr-3" data-icon="settings">settings</span>
+<span class="font-label uppercase tracking-wider text-xs">Settings</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 px-2 border-t border-teal-500/10 flex items-center gap-3">
+<img alt="User profile" class="w-10 h-10 rounded-full object-cover" data-alt="Professional studio portrait of a refined man in a charcoal suit, minimalist soft lighting, neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuByem0umvRlHfem4aL_TvIqVOEB-8uVc3iVUNuk_2t8rxTaTpuPTE9rWv1wt1t0kpXsLK1Pa3EV_hBmGnr_cpYEusrJ3Qidf-ZWs6bqlwV20mk3eINVzuYSlOypNp4jrKd-6PMqlbn9uBKZrXMY8IwV2BJ9Y6N9RL5pzX1DcrHU5i_2NY7O4F9x91DZqTmJu8uVBw7ZRI7WXcgOfk6VvtPUgkQRvsrkpD28rTFhTk8_mukTgJCBn9tEncs6_jZN86NYkN87BYtWsiM"/>
+<div class="overflow-hidden">
+<p class="text-sm font-bold text-teal-900 truncate">Julian Pierce</p>
+<p class="text-xs text-slate-500 truncate">julian.p@Tracker.com</p>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col min-w-0">
+<!-- Top App Bar -->
+<header class="flex justify-between items-center w-full px-8 py-4 border-b border-teal-500/10 bg-white/80 backdrop-blur-md sticky top-0 z-30">
+<div class="flex items-center gap-8">
+<span class="text-xl font-black text-teal-900 dark:text-teal-50 font-headline hidden md:block">The Financial Architect</span>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant" data-icon="search">search</span>
+<input class="bg-surface-container-low border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-teal-500/20 w-64 transition-all" placeholder="Search accounts..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-600 hover:text-teal-600 transition-all rounded-full hover:bg-teal-50">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-slate-600 hover:text-teal-600 transition-all rounded-full hover:bg-teal-50">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</header>
+<div class="p-8 space-y-8">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div class="space-y-1">
+<h2 class="text-4xl font-extrabold font-headline tracking-tight text-on-surface">All Bills</h2>
+<p class="text-on-surface-variant font-body">Managing <span id="totalBills">0</span> active obligations across <span id="totalCategories">0</span> categories.</p>
+</div>
+<a class="bg-primary hover:bg-primary-container text-on-primary px-6 py-3 rounded-lg font-bold flex items-center gap-2 transition-all shadow-lg shadow-teal-900/10 scale-98 active:opacity-80 inline-flex" th:href="@{/bill-form}">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                        Add Bill
+                    </a>
+</div>
+<!-- Active Filters Display -->
+<div id="activeFilters" class="space-y-2"></div>
+<!-- Filter Bar (Bento Inspired) -->
+<div class="bg-surface-container-low p-6 rounded-xl space-y-4">
+<div class="flex flex-wrap gap-4 items-end">
+<div class="flex-1 min-w-[240px]">
+<label for="searchInput" class="block text-[10px] font-label uppercase tracking-widest text-outline mb-1">Search Records</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant text-sm" data-icon="manage_search">manage_search</span>
+<input class="w-full bg-surface-container-lowest border-none rounded-lg pl-10 py-2.5 text-sm focus:ring-2 focus:ring-teal-500/20" placeholder="Filter by title or merchant..." type="text" id="searchInput"/>
+</div>
+</div>
+<div class="w-32">
+<label for="yearFilter" class="block text-[10px] font-label uppercase tracking-widest text-outline mb-1">Year</label>
+<select class="w-full bg-surface-container-lowest border-none rounded-lg py-2.5 text-sm focus:ring-2 focus:ring-teal-500/20 appearance-none" id="yearFilter">
+<option>All Years</option>
+<option>2026</option>
+<option>2025</option>
+<option>2024</option>
+<option>2023</option>
+</select>
+</div>
+<div class="w-40">
+<label for="monthFilter" class="block text-[10px] font-label uppercase tracking-widest text-outline mb-1">Month</label>
+<select class="w-full bg-surface-container-lowest border-none rounded-lg py-2.5 text-sm focus:ring-2 focus:ring-teal-500/20 appearance-none" id="monthFilter">
+<option>All Months</option>
+<option>January</option>
+<option>February</option>
+<option>March</option>
+<option>April</option>
+<option>May</option>
+<option>June</option>
+<option>July</option>
+<option>August</option>
+<option>September</option>
+<option>October</option>
+<option>November</option>
+<option>December</option>
+</select>
+</div>
+<div class="w-40">
+<label for="statusFilter" class="block text-[10px] font-label uppercase tracking-widest text-outline mb-1">Status</label>
+<select class="w-full bg-surface-container-lowest border-none rounded-lg py-2.5 text-sm focus:ring-2 focus:ring-teal-500/20 appearance-none" id="statusFilter">
+<option>All Statuses</option>
+<option>Paid</option>
+<option>Unpaid</option>
+<option>Overdue</option>
+</select>
+</div>
+<div class="w-48">
+<label for="categoryFilter" class="block text-[10px] font-label uppercase tracking-widest text-outline mb-1">Category</label>
+<select class="w-full bg-surface-container-lowest border-none rounded-lg py-2.5 text-sm focus:ring-2 focus:ring-teal-500/20 appearance-none" id="categoryFilter">
+<option>All Categories</option>
+<option>Utilities</option>
+<option>Mortgage</option>
+<option>Subscriptions</option>
+</select>
+</div>
+</div>
+<!-- Advanced Filters Row -->
+<div class="flex flex-wrap gap-4 items-end">
+<div class="w-full sm:w-40">
+<label for="minAmount" class="block text-[10px] font-label uppercase tracking-widest text-outline mb-1">Min Amount</label>
+<input class="w-full bg-surface-container-lowest border-none rounded-lg py-2.5 px-3 text-sm focus:ring-2 focus:ring-teal-500/20" type="number" id="minAmount" placeholder="$0.00" step="0.01" min="0"/>
+</div>
+<div class="w-full sm:w-40">
+<label for="maxAmount" class="block text-[10px] font-label uppercase tracking-widest text-outline mb-1">Max Amount</label>
+<input class="w-full bg-surface-container-lowest border-none rounded-lg py-2.5 px-3 text-sm focus:ring-2 focus:ring-teal-500/20" type="number" id="maxAmount" placeholder="$10,000.00" step="0.01" min="0"/>
+</div>
+<div class="w-full sm:w-40">
+<label for="dueDateFrom" class="block text-[10px] font-label uppercase tracking-widest text-outline mb-1">Due Date From</label>
+<input class="w-full bg-surface-container-lowest border-none rounded-lg py-2.5 px-3 text-sm focus:ring-2 focus:ring-teal-500/20" type="date" id="dueDateFrom"/>
+</div>
+<div class="w-full sm:w-40">
+<label for="dueDateTo" class="block text-[10px] font-label uppercase tracking-widest text-outline mb-1">Due Date To</label>
+<input class="w-full bg-surface-container-lowest border-none rounded-lg py-2.5 px-3 text-sm focus:ring-2 focus:ring-teal-500/20" type="date" id="dueDateTo"/>
+</div>
+<div class="w-full sm:w-40">
+<label for="sortBy" class="block text-[10px] font-label uppercase tracking-widest text-outline mb-1">Sort By</label>
+<select class="w-full bg-surface-container-lowest border-none rounded-lg py-2.5 px-3 text-sm focus:ring-2 focus:ring-teal-500/20 appearance-none" id="sortBy">
+<option value="dueDate-asc">Due Date (Soonest)</option>
+<option value="dueDate-desc">Due Date (Latest)</option>
+<option value="amount-asc">Amount (Low to High)</option>
+<option value="amount-desc">Amount (High to Low)</option>
+<option value="title-asc">Title (A to Z)</option>
+</select>
+</div>
+<button onclick="clearAllFilters()" class="px-4 py-2.5 bg-error/20 text-error rounded-lg font-bold text-sm hover:bg-error/30 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">clear</span>
+Clear Filters
+</button>
+</div>
+</div>
+<!-- Table Section (Asymmetric List Pattern) -->
+<div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm shadow-on-surface/5">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-8 py-5 text-[10px] font-label uppercase tracking-widest text-outline">Title</th>
+<th class="px-6 py-5 text-[10px] font-label uppercase tracking-widest text-outline">Category</th>
+<th class="px-6 py-5 text-[10px] font-label uppercase tracking-widest text-outline text-right">Amount</th>
+<th class="px-6 py-5 text-[10px] font-label uppercase tracking-widest text-outline">Due Date</th>
+<th class="px-6 py-5 text-[10px] font-label uppercase tracking-widest text-outline">Status</th>
+<th class="px-8 py-5 text-[10px] font-label uppercase tracking-widest text-outline text-right">Actions</th>
+</tr>
+</thead>
+<tbody id="billsTable">
+<!-- Bills will be populated here -->
+</tbody>
 </table>
-
-<script src="../static/js/bills.js"></script>
-
-</body>
-</html>
+<!-- Pagination Footer -->
+<div class="px-8 py-4 bg-surface-container-low/30 border-t border-outline-variant/10 flex items-center justify-between">
+<p class="text-xs font-label text-outline uppercase tracking-wider">Showing <span id="showingStart">1</span> to <span id="showingEnd">10</span> of <span id="totalRecords">42</span> bills</p>
+<div class="flex gap-2">
+<button class="p-2 rounded-lg border border-outline-variant/30 text-outline-variant hover:bg-white hover:text-teal-700 transition-all" id="prevPage">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="px-3 py-1 rounded-lg bg-primary text-on-primary font-bold text-sm" id="currentPage">1</button>
+<button class="px-3 py-1 rounded-lg hover:bg-white text-outline-variant font-bold text-sm" id="nextPageBtn">2</button>
+<button class="p-2 rounded-lg border border-outline-variant/30 text-outline-variant hover:bg-white hover:text-teal-700 transition-all" id="nextPage">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Contextual FAB (Only for main list view) -->
+<a class="fixed bottom-8 right-8 w-14 h-14 bg-primary hover:bg-primary-container text-on-primary rounded-full shadow-2xl flex items-center justify-center transition-transform hover:scale-110 active:scale-95 group" th:href="@{/bill-form}">
+<span class="material-symbols-outlined text-2xl transition-transform group-hover:rotate-90" data-icon="add">add</span>
+</a>
+</main>
+</div>
+<!-- Mobile Navigation Shell (Bottom Nav) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-lg border-t-0 flex justify-around items-center py-3 px-2 z-50 shadow-[0_-8px_30px_rgb(0,0,0,0.04)]" aria-label="Mobile navigation">
+<a class="flex flex-col items-center gap-1 text-slate-500" th:href="@{/dashboard}">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-[10px] font-label uppercase tracking-tighter">Dash</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-teal-700 font-bold" th:href="@{/bills-page}">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="text-[10px] font-label uppercase tracking-tighter">Bills</span>
+</a>
+<div class="relative -top-6">
+<a class="w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center" th:href="@{/bill-form}">
+<span class="material-symbols-outlined text-2xl" data-icon="add">add</span>
+</a>
+</div>
+<a class="flex flex-col items-center gap-1 text-slate-500" th:href="@{/analytics}">
+<span class="material-symbols-outlined" data-icon="insights">insights</span>
+<span class="text-[10px] font-label uppercase tracking-tighter">Stats</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500" th:href="@{/settings}">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-[10px] font-label uppercase tracking-tighter">Set</span>
+</a>
+</nav>
+<script src="/js/api.js"></script>
+<script src="/js/bills.js"></script>
+</body></html>

@@ -8,7 +8,7 @@ public class PageController {
 
     @GetMapping("/")
     public String home() {
-        return "dashboard"; // loads dashboard.html
+        return "welcome"; // welcome.html
     }
 
     @GetMapping("/dashboard")
@@ -24,5 +24,30 @@ public class PageController {
     @GetMapping("/analytics")
     public String analytics() {
         return "analytics";
+    }
+
+    @GetMapping("/form")
+    public String form() {
+        return "bill-form";
+    }
+
+    @GetMapping("/bill-form")
+    public String billForm() {
+        return "bill-form";
+    }
+
+    @GetMapping("/bill-details")
+    public String billDetails() {
+        return "bill-details";
+    }
+
+    @GetMapping("/categories")
+    public String categories() {
+        return "categories";
+    }
+
+    @GetMapping("/settings")
+    public String settings() {
+        return "settings";
     }
 }

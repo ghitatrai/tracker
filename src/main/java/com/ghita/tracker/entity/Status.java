@@ -1,4 +1,6 @@
 package com.ghita.tracker.entity;
 
-public class Status {
+public enum Status {
+    PAID,
+    UNPAID
 }

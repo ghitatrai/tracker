@@ -1,10 +1,265 @@
-<h2>Add / Edit Bill</h2>
-<form>
-  <input placeholder="Title"><br>
-  <input type="number" placeholder="Amount"><br>
-  <input type="date"><br>
-  <select>
-    <option>Category</option>
-  </select><br>
-  <button>Save</button>
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Add Bill | The Financial Architect</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#93ccff",
+                        "on-primary-fixed": "#00201d",
+                        "on-tertiary-container": "#fffbff",
+                        "surface-variant": "#dee4e1",
+                        "tertiary-container": "#b05e3d",
+                        "inverse-on-surface": "#edf2f0",
+                        "on-primary-container": "#f4fffc",
+                        "tertiary": "#924628",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed": "#001d31",
+                        "on-secondary-fixed-variant": "#004b73",
+                        "on-background": "#171d1c",
+                        "surface-container-high": "#e4e9e7",
+                        "surface-tint": "#006a61",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#dee4e1",
+                        "background": "#f5faf8",
+                        "surface-container-low": "#f0f5f2",
+                        "surface-dim": "#d6dbd9",
+                        "surface-container": "#eaefed",
+                        "secondary-container": "#5bb8fe",
+                        "on-secondary-container": "#00476e",
+                        "outline-variant": "#bcc9c6",
+                        "on-surface-variant": "#3d4947",
+                        "error-container": "#ffdad6",
+                        "surface": "#f5faf8",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#6d7a77",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f5faf8",
+                        "tertiary-fixed": "#ffdbce",
+                        "on-surface": "#171d1c",
+                        "inverse-primary": "#6bd8cb",
+                        "on-tertiary-fixed-variant": "#773215",
+                        "inverse-surface": "#2c3130",
+                        "on-tertiary-fixed": "#370e00",
+                        "primary-container": "#008378",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#89f5e7",
+                        "secondary": "#006398",
+                        "primary": "#00685f",
+                        "on-primary-fixed-variant": "#005049",
+                        "secondary-fixed": "#cce5ff",
+                        "primary-fixed-dim": "#6bd8cb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tonal-shift {
+            transition: background-color 0.2s ease;
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(20%) sepia(50%) saturate(1000%) hue-rotate(140deg) brightness(95%) contrast(90%);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body min-h-screen flex">
+<!-- SideNavBar Shell -->
+<aside class="hidden md:flex flex-col h-full sticky top-0 py-6 px-4 bg-emerald-50 dark:bg-slate-900 h-screen w-64 border-r-0 z-40">
+<div class="mb-10 px-2">
+<h1 class="text-2xl font-bold tracking-tight text-teal-900 dark:text-teal-50 font-headline">Tracker</h1>
+<p class="text-[10px] font-label uppercase tracking-[0.05em] text-teal-800/60 dark:text-teal-400/60 mt-1">Premium Financial Architect</p>
+</div>
+<nav class="flex-1 space-y-1" aria-label="Primary sidebar navigation">
+<!-- Active Tab: Add Bill -->
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-teal-600 hover:bg-emerald-100 dark:hover:bg-slate-800 transition-colors duration-200 rounded-lg group" th:href="@{/dashboard}">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-sm font-medium tracking-tight">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-teal-600 hover:bg-emerald-100 dark:hover:bg-slate-800 transition-colors duration-200 rounded-lg group" th:href="@{/bills-page}">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="text-sm font-medium tracking-tight">Bills</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-teal-700 dark:text-teal-400 font-bold border-r-4 border-teal-700 dark:border-teal-400 bg-teal-50/50 dark:bg-teal-900/20 transition-colors duration-200 group" th:href="@{/bill-form}">
+<span class="material-symbols-outlined" data-icon="add_circle" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+<span class="text-sm tracking-tight">Add Bill</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-teal-600 hover:bg-emerald-100 dark:hover:bg-slate-800 transition-colors duration-200 rounded-lg group" th:href="@{/analytics}">
+<span class="material-symbols-outlined" data-icon="insights">insights</span>
+<span class="text-sm font-medium tracking-tight">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-teal-600 hover:bg-emerald-100 dark:hover:bg-slate-800 transition-colors duration-200 rounded-lg group" th:href="@{/categories}">
+<span class="material-symbols-outlined" data-icon="category">category</span>
+<span class="text-sm font-medium tracking-tight">Categories</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-teal-500/10">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-teal-600 hover:bg-emerald-100 dark:hover:bg-slate-800 transition-colors duration-200 rounded-lg" th:href="@{/settings}">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+<div class="mt-4 flex items-center gap-3 px-4 py-2">
+<img class="w-8 h-8 rounded-full object-cover" alt="Profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrsF7vme-bcGzA3HSYe8f21MW1VNzEfgRvURq9IY3P3QGov19-hX14MIC880tM6rqIi9y3_XQXoGBrTN_uNko1L9wVSX-DUBLl41_fLaffx_f2a_BIjuQUlVrt2745DOlljYXw0C4NrJDX3ArxEbrKm5HkePeks8a3YLLkN8EbZTOQNx4gfX9raYS85C4yJq_vNucRWuRZBC0uAJytAi-7yGVz_7Byok5HsbK1F66HZ_s1gfuFL4sYB6L2kCucqpFO7cWNzbdUcns"/>
+<div class="overflow-hidden">
+<p class="text-xs font-bold text-teal-900 dark:text-teal-50 truncate">Julian Vance</p>
+<p class="text-[10px] text-teal-700/60 dark:text-teal-400/60 truncate">Pro Plan</p>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col min-h-screen">
+<!-- TopNavBar Shell -->
+<header class="flex justify-between items-center w-full px-8 py-4 border-b border-teal-500/10 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
+<div class="flex items-center gap-6">
+<span class="md:hidden text-xl font-black text-teal-900 dark:text-teal-50 font-headline">Tracker</span>
+<div class="hidden md:flex items-center bg-surface-container-low px-4 py-2 rounded-full w-64 group focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+<span class="material-symbols-outlined text-outline text-sm" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder:text-outline" placeholder="Search transactions..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-600 dark:text-slate-400 hover:text-teal-600 transition-all">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-slate-600 dark:text-slate-400 hover:text-teal-600 transition-all">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-highest">
+<img class="w-full h-full object-cover" alt="Professional profile headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQ9IXZuDCfcbRtyIxwVocHobeEbpbFjTzQO6ASLvvuoKXhoYci2nrHARCZqMQ3AUEJnx7vfp23AQqbBxj3MtL3keK_CCdc2DvXvPgN5oPKy0zxEpbPQaTyLvYsIFyH4LLWoN7xy28S0XLgeve2qxpiH7-GDEisBE98vjmjYjdeHo-T7ozFnlwNFOmAcXebfxds0Paqt2tYkIUPr0Gq--ZR0bNL1-DjHVNXcWpj7HImElCi2tqHQiTMlwRzUPsSRP96a8y94NCbcM0"/>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="flex-1 p-8 lg:p-12 flex justify-center items-start">
+<div class="w-full max-w-2xl space-y-10">
+<!-- Header Section -->
+<div class="space-y-2">
+<h2 id="formTitle" class="text-4xl font-extrabold font-headline text-on-surface tracking-tight">Add Bill</h2>
+<p class="text-on-surface-variant font-medium">Add a new obligation to your digital Tracker with precision.</p>
+</div>
+<!-- Form Section (Bento Card Style) -->
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-[0_24px_48px_-12px_rgba(23,29,28,0.04)] border border-outline-variant/15">
+<form id="billForm" class="space-y-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
+<!-- Bill Title -->
+<div class="md:col-span-2 group">
+<label for="title" class="block text-[10px] font-label font-bold uppercase tracking-[0.1em] text-outline mb-2 group-focus-within:text-primary transition-colors">Bill Title</label>
+<input id="title" class="w-full bg-surface-container-highest border-none border-b-2 border-transparent focus:border-primary focus:ring-0 transition-all px-4 py-3 rounded-t-lg font-medium text-on-surface placeholder:text-outline-variant" placeholder="e.g., Quarterly Cloud Infrastructure" type="text"/>
+</div>
+<!-- Amount -->
+<div class="group">
+<label for="amount" class="block text-[10px] font-label font-bold uppercase tracking-[0.1em] text-outline mb-2 group-focus-within:text-primary transition-colors">Amount Due</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant font-bold">$</span>
+<input id="amount" class="w-full bg-surface-container-highest border-none border-b-2 border-transparent focus:border-primary focus:ring-0 transition-all pl-8 pr-4 py-3 rounded-t-lg font-headline text-xl font-bold text-on-surface placeholder:text-outline-variant" placeholder="0.00" step="0.01" type="number"/>
+</div>
+</div>
+<!-- Due Date -->
+<div class="group">
+<label for="dueDate" class="block text-[10px] font-label font-bold uppercase tracking-[0.1em] text-outline mb-2 group-focus-within:text-primary transition-colors">Due Date</label>
+<input id="dueDate" class="w-full bg-surface-container-highest border-none border-b-2 border-transparent focus:border-primary focus:ring-0 transition-all px-4 py-3 rounded-t-lg font-medium text-on-surface" type="date"/>
+</div>
+<!-- Category -->
+<div class="group">
+<label for="category" class="block text-[10px] font-label font-bold uppercase tracking-[0.1em] text-outline mb-2 group-focus-within:text-primary transition-colors">Category</label>
+<div class="relative">
+<select id="category" class="w-full appearance-none bg-surface-container-highest border-none border-b-2 border-transparent focus:border-primary focus:ring-0 transition-all px-4 py-3 rounded-t-lg font-medium text-on-surface cursor-pointer">
+<option disabled="" selected="" value="">Select category</option>
+<option>Utilities</option>
+<option>Rent / Mortgage</option>
+<option>Software Subscription</option>
+<option>Professional Services</option>
+<option>Other</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-outline-variant" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<!-- Status -->
+<div class="group">
+<label for="statusPaid" class="block text-[10px] font-label font-bold uppercase tracking-[0.1em] text-outline mb-2 group-focus-within:text-primary transition-colors">Status</label>
+<div class="flex gap-4">
+<label class="flex-1 relative cursor-pointer group/radio">
+<input id="statusPaid" class="peer sr-only" name="status" type="radio" value="PAID"/>
+<div class="w-full py-3 text-center rounded-lg border-2 border-transparent bg-surface-container-high text-on-surface-variant font-bold peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary transition-all text-xs tracking-wider">
+                                            PAID
+                                        </div>
+</label>
+<label class="flex-1 relative cursor-pointer group/radio">
+<input id="statusUnpaid" checked="" class="peer sr-only" name="status" type="radio" value="UNPAID"/>
+<div class="w-full py-3 text-center rounded-lg border-2 border-transparent bg-surface-container-high text-on-surface-variant font-bold peer-checked:bg-tertiary-container peer-checked:text-on-tertiary-container peer-checked:border-tertiary transition-all text-xs tracking-wider">
+                                            UNPAID
+                                        </div>
+</label>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="pt-8 flex flex-col gap-4 sm:flex-row">
+<button class="flex-1 bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold py-4 px-8 rounded-xl shadow-lg shadow-primary/10 hover:shadow-primary/20 transition-all active:scale-95" type="submit">Save Entry</button>
+<button class="flex-1 bg-transparent hover:bg-surface-container-high text-on-tertiary-fixed-variant font-bold py-4 px-8 rounded-xl transition-all" type="button" onclick="window.location.href='/bills-page'">Cancel</button>
+</div>
 </form>
+</div>
+<!-- Footer Contextual Tip -->
+<div class="flex items-center gap-4 p-6 bg-secondary-fixed/20 rounded-xl">
+<span class="material-symbols-outlined text-secondary" data-icon="info" style="font-variation-settings: 'FILL' 1;">info</span>
+<p class="text-xs text-on-secondary-container leading-relaxed">
+                        Entries marked as <span class="font-bold">UNPAID</span> will automatically generate a notification reminder 48 hours prior to the selected Due Date.
+                    </p>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar for Mobile Shell -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md flex justify-around items-center py-4 px-2 z-50" aria-label="Mobile bottom navigation">
+<a class="flex flex-col items-center gap-1 text-slate-600" th:href="@{/dashboard}">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-[10px] font-bold">DASHBOARD</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-600" th:href="@{/bills-page}">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="text-[10px] font-bold">BILLS</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-teal-700" th:href="@{/bill-form}">
+<span class="material-symbols-outlined" data-icon="add_circle" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+<span class="text-[10px] font-bold">ADD</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-600" th:href="@{/analytics}">
+<span class="material-symbols-outlined" data-icon="insights">insights</span>
+<span class="text-[10px] font-bold">ANALYTICS</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-600" th:href="@{/settings}">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-[10px] font-bold">SETTINGS</span>
+</a>
+</nav>
+<script src="/js/api.js"></script>
+<script src="/js/form-handler.js"></script>
+</body>
+</html>
