@@ -1,0 +1,22 @@
+body {
+    font-family: Arial;
+    background: #f4f4f4;
+    margin: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    margin: 20px auto;
+    width: 80%;
+    border-radius: 10px;
+}
+
+input, select, button {
+    margin: 5px;
+    padding: 8px;
+}

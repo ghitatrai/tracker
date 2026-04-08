@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../static/css/analytics.css">
+</head>
+<body>
+
+<h2>Analytics</h2>
+
+<div class="chart-box">
+    <canvas id="lineChart"></canvas>
+</div>
+
+<div class="chart-box">
+    <canvas id="barChart"></canvas>
+</div>
+
+<div class="chart-box">
+    <canvas id="pieChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../static/js/api.js"></script>
+<script src="../static/js/charts.js"></script>
+
+<script>
+    API.getAnalyticsData().then(data => {
+        renderLineChart(document.getElementById("lineChart"), ["Jan","Feb"], data.monthly);
+        renderBarChart(document.getElementById("barChart"), ["Jan","Feb"], data.monthly, data.lastYear);
+        renderPieChart(document.getElementById("pieChart"), data.categories.labels, data.categories.values);
+    });
+</script>
+
+</body>
+</html>
